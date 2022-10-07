@@ -91,6 +91,7 @@ __pycache__/
 local_settings.py
 
 .env
+.idea/
 *.env
 .env.*
 db.sqlite3
