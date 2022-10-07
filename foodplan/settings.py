@@ -1,3 +1,5 @@
+import os
+
 import dj_database_url
 
 from environs import Env
@@ -50,7 +52,9 @@ ROOT_URLCONF = "foodplan.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, "templates")
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -65,6 +69,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "foodplan.wsgi.application"
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -108,6 +114,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
+STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, 'static')
+    ]
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
