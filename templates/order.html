@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Foodplan 2022 - Меню на неделю FOODPLAN</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-light fixed-top navbar__opacity">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static 'img/logo.8d8f24edbb5f.svg' %}" height="55" width="189" alt="">
+                </a>
+                <!-- <h3 class="text-secondary mt-2 me-2">Стоимость: 00000₽</h3>
+                <button type="submit" id="btnContinue" class="btn btn-sm btn-outline-success foodplan_green foodplan__border_green">Оплатить</button> -->
+            </div>
+        </nav>
+    </header>
+    <main style="margin-top: calc(2rem + 85px);">
+        <section>
+            <div class="container">
+                <h1><strong class="foodplan_green">1 шаг </strong>до первого меню</h1>
+                <h5 class="text-secondary mb-3">Вам будет доступно 4 типа меню: Классическое, Низкоуглеводное, Вегетарианское и Кето.</h5>
+                <div class="row mb-5">
+                    <div class="col-6 col-md-3">
+                        <img src="{% static 'img/menu_classical.png' %}" alt="" class="w-100">
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <img src="{% static 'img/menu_nizkougl.png' %}" alt="" class="w-100">
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <img src="{% static 'img/menu_veg.png' %}" alt="" class="w-100">
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <img src="{% static 'img/menu_keto.png' %}" alt="" class="w-100">
+                    </div>
+                </div>
+                <h2><strong>Выберите подходящий тариф</strong></h2>
+                <form action = "" method = "POST">
+                    {% csrf_token %}
+                    <table class="table text-center text-truncate mb-5">
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="text-start">Тип меню</th>
+                                <td>
+                                    <select name="menu_type" class="form-select">
+                                        <option value="Классическое" selected>Классическое</option>
+                                        <option value="Низкоуглеводное">Низкоуглеводное</option>
+                                        <option value="Вегетарианское">Вегетарианское</option>
+                                        <option value="Кето">Кето</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-start">Срок</th>
+                                <td>
+                                    <select name="duration" class="form-select">
+                                        <option value="3" selected>3 мес.</option>
+                                        <option value="6">6 мес.</option>
+                                        <option value="12">12 мес.</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-start">Количество приёмов пищи</th>
+                                <td>
+                                    <select name="number_of_meals" class="form-select">
+                                        <option value="1" selected>1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-start">Кол-во персон</th>
+                                <td>
+                                    <select name="number_of_person" class="form-select">
+                                        <option value="1" selected>1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-start">Аллергии</th>
+                                <td>
+                                    {% for allergy in allergies %}
+                                        <div class="form-check d-flex justify-content-start">
+                                            <input class="form-check-input me-1" type="checkbox" value="{{ allergy }}" name="allergies">
+                                            <label class="form-check-label" for="allergies">
+                                                {{ allergy }}
+                                            </label>
+                                        </div>
+                                    {% endfor %}
+                                    <div class="form-check d-flex justify-content-start">
+                                        <input class="form-check-input me-1" type="checkbox" value="" name="allergies" checked>
+                                        <label class="form-check-label" for="allergies">
+                                            Аллергий нет
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-center my-5">
+                        <button type="submit" id="btnContinue"
+                            class="btn btn-outline-success foodplan_green foodplan__border_green w-50">
+                            Продолжить
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>

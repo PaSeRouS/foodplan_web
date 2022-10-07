@@ -37,7 +37,7 @@ class SubscriptionType(models.Model):
         verbose_name_plural = 'Типы подписки'
 
     def __str__(self):
-        return f'{self.name}, {self.duration} мес., {self.price}р. в месяц'
+        return f'{self.name}, {self.duration} мес, {self.price}р. в месяц'
 
 
 class Subscription(models.Model):
@@ -51,6 +51,9 @@ class Subscription(models.Model):
     number_of_meals = models.SmallIntegerField(
         'Количество приёмов пищи в день',
     )
+    number_of_person = models.SmallIntegerField(
+        'Количество персон',
+    )
     subs_type = models.ForeignKey(
         SubscriptionType,
         verbose_name='Тип подписки',
@@ -63,6 +66,12 @@ class Subscription(models.Model):
         verbose_name='Аллергии',
         related_name="subscriptions",
         blank=True
+    )
+    price = models.DecimalField(
+        'Стоимость',
+        max_digits=8,
+        decimal_places=2,
+        validators=[MinValueValidator(0)]
     )
     valid_until = models.DateField(
         'Действительно до',

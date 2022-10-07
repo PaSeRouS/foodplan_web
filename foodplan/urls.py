@@ -19,8 +19,10 @@ from django.shortcuts import render
 from django.urls import path
 
 from . import settings
+from web import views
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path('admin/', admin.site.urls),
     path('', render, kwargs={'template_name': 'index.html'}, name='start_page'),
+    path('order/', views.order, name='order_page'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
