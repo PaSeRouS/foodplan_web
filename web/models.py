@@ -22,10 +22,10 @@ class SubscriptionType(models.Model):
         max_length=50
     )
     duration = models.IntegerField(
-        'Длительность в днях'
+        'Длительность в месяцах'
     )
     price = models.DecimalField(
-        'Цена',
+        'Цена за месяц',
         max_digits=8,
         decimal_places=2,
         validators=[MinValueValidator(0)]
@@ -36,7 +36,7 @@ class SubscriptionType(models.Model):
         verbose_name_plural = 'Типы подписки'
 
     def __str__(self):
-        return f'{self.name}, {self.duration} дней, {self.price}р.'
+        return f'{self.name}, {self.duration} мес., {self.price}р. в месяц'
 
 class Subscription(models.Model):
     user = models.ForeignKey(
@@ -60,7 +60,6 @@ class Subscription(models.Model):
         Allergy,
         verbose_name='Аллергии',
         related_name="subscriptions",
-        null=True,
         blank=True
     )
     valid_until = models.DateField(
