@@ -110,26 +110,47 @@ class IngredientQuantity(models.Model):
         related_name='ingredient_quantities',
         on_delete=models.CASCADE
     )
-    weight = models.DecimalField(
+    weight_per_portion = models.DecimalField(
         'Вес',
         max_digits=7,
         decimal_places=3
     )
-    amount = models.DecimalField(
+    amount_per_portion = models.DecimalField(
         'Количество',
         max_digits=7,
         decimal_places=3
     )
-    unit_title = models.CharField(
+    unit_label = models.CharField(
         'еденица измерения',
         max_length=20
     )
 
 
 class Recipe(models.Model):
+    CLASSIC = 'CL'
+    VEGETARIAN = 'VG'
+    KETO = 'KT'
+    LOW_CARBS = 'LC'
+    MENU_TYPE_CHOICES = [
+        (CLASSIC, 'Классическое'),
+        (LOW_CARBS, 'Низкоуглеводное'),
+        (VEGETARIAN, 'Вегетерианское'),
+        (KETO, 'Кето')
+    ]
     name = models.CharField(
         'Название рецепта',
         max_length=50
+    )
+    menu_type = models.CharField(
+        'Тип меню',
+        max_length=2,
+        choices=MENU_TYPE_CHOICES
+    )
+    cover_image = models.ImageField(
+        'Обложка',
+        upload_to='cover_images',
+        null=True,
+        blank=True
     )
     steps = models.TextField(
         'Шаги рецепта'
@@ -162,7 +183,8 @@ class Recipe(models.Model):
         Ingredient,
         verbose_name='Ингредиенты',
         related_name='recipes',
-        through=IngredientQuantity
+        through=IngredientQuantity,
+        blank=True
     )
 
     class Meta:
