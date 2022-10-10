@@ -28,5 +28,6 @@ urlpatterns = [
     path('order/', views.order, name='order_page'),
     path('registration/', views.register, name='registration'),
     path('subscription/', render, kwargs={'template_name': 'subscription.html'}, name='subscription_page'),
-    path('lk/', views.lk, name='lk'),
+    # path('lk/', views.lk, name='lk'),
+    path('accounts/profile/', views.lk, name='lk'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,14 +1,16 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 from .forms import RegisterForm
 from .models import Allergy, SubscriptionType, Subscription, Recipe
 
 
+@login_required(login_url='/login/')
 def order(request):
     if request.method == 'POST':
         user = request.user
@@ -42,7 +44,7 @@ def order(request):
 
         subscription.save()
 
-        return render(request, 'index.html')
+        return render(request, 'lk.html')
     else:
         context = {
             'allergies': [allergy.name for allergy in Allergy.objects.all()]
@@ -61,7 +63,6 @@ def register(request):
                 password=form.cleaned_data['password1'],
             )
             login(request, new_user)
-            print(request)
             return redirect('start_page')
     else:
         form = RegisterForm()
@@ -69,7 +70,11 @@ def register(request):
 
 
 def lk(request):
-    return render(request, 'lk.html')
+    context = {
+        'username': request.user.username,
+    }
+
+    return render(request, 'lk.html', context)
 
 
 def get_recipes_without_allergies(subscription):
