@@ -76,11 +76,11 @@ MEDIA_URL = '/media/'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASE_URL = env("DATABASE_URL", f"sqlite:///{BASE_DIR}/db.sqlite3")
-# DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
+DATABASE_URL = env("DATABASE_URL", f"sqlite:///{BASE_DIR}/db.sqlite3")
+DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
 
-db_from_env = dj-database-url.config()
-DATABASE['default'].update(db_from_env)
+# db_from_env = dj-database-url.config()
+# DATABASE['default'].update(db_from_env)
 
 
 # Password validation
