@@ -7,3 +7,6 @@ lxml==4.8.0
 requests==2.27.1
 Pillow==9.2.0
 django-widget-tweaks==1.4.12
+psycopg2==2.8.6
+gunicorn
+whitenoise

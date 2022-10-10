@@ -22,7 +22,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", True)
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", ["127.0.0.1"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", ["*"])
 
 
 # Application definition
@@ -76,8 +76,11 @@ MEDIA_URL = '/media/'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASE_URL = env("DATABASE_URL", f"sqlite:///{BASE_DIR}/db.sqlite3")
-DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
+# DATABASE_URL = env("DATABASE_URL", f"sqlite:///{BASE_DIR}/db.sqlite3")
+# DATABASES = {"default": dj_database_url.parse(DATABASE_URL)}
+
+db_from_env = dj-database-url.config()
+DATABASE['default'].update(db_from_env)
 
 
 # Password validation
@@ -120,8 +123,7 @@ STATICFILES_DIRS = [
     ]
 
 STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
