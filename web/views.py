@@ -65,3 +65,7 @@ def register(request):
     else:
         form = RegisterForm()
     return render(request, 'registration.html', {'form': form})
+
+
+def lk(request):
+    return render(request, 'lk.html')
