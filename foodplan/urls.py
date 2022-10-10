@@ -28,4 +28,6 @@ urlpatterns = [
     path('order/', views.order, name='order_page'),
     path('registration/', views.register, name='registration'),
     path('subscriptions/<int:subscription_id>', views.subscription_detail, name='subscription_page'),
+    # path('lk/', views.lk, name='lk'),
+    path('accounts/profile/', views.lk, name='lk'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
