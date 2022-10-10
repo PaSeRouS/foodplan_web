@@ -1,1 +1,1 @@
-web: gunicorn foodplan.wsgi --log-file -
+web: python manage.py runserver
