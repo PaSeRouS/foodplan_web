@@ -37,7 +37,7 @@ class SubscriptionType(models.Model):
         verbose_name_plural = 'Типы подписки'
 
     def __str__(self):
-        return f'{self.name}, {self.duration} мес, {self.price}р. в месяц'
+        return f'{self.name} меню, {self.duration} мес, {self.price}р. в месяц'
 
 
 class Subscription(models.Model):

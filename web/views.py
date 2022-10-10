@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 
 from .forms import RegisterForm
-from .models import Allergy, SubscriptionType, Subscription
+from .models import Allergy, SubscriptionType, Subscription, Recipe
 
 
 def order(request):
@@ -61,7 +61,91 @@ def register(request):
                 password=form.cleaned_data['password1'],
             )
             login(request, new_user)
+            print(request)
             return redirect('start_page')
     else:
         form = RegisterForm()
     return render(request, 'registration.html', {'form': form})
+
+
+def get_recipes_without_allergies(subscription):
+    all_allergies = []
+    sorted_recipes = []
+
+    milk_allergy = (['Молоко', 'Кефир', 'Творог', 'Сметана', 'Айран',
+                     'Бифилин', 'Йогурт', 'Катык', 'Кумыс', 'Кефир',
+                     'Масло сливочное', 'Сливочное масло', 'Маргарин',
+                     'Мороженое', 'Мацони', 'Молочная сыворотка', 'Пахта', 
+                     'Ряженка', 'Сыр', 'Сливки', 'Сгущёное молоко',
+                     'Сгущёнка', 'Сгущенка', 'Спред', 'Шубат',
+                     'Топлёное масло'])
+
+    fish_allergy = (['Рыбий жир', 'Икр', 'Рыба', 'Сардин', 'Тунец', 'Тунца',
+                     'Моллюск', 'Устриц', 'Окунь', 'Микижа', 'Креветк',
+                     'Скумбри', 'Треск', 'Пикша', 'Палтус', 'Сайр', 'Минта',
+                     'Лосос', 'Нерк', 'Акул', 'Сурими', 'Краб', 'Миди',
+                     'Кальмар', 'Чавыч', 'Минта', 'Кет', 'Кильк', 'Окун',
+                     'Камбал', 'Хек', 'Сом', 'Форел', 'Шпрот', 'Судак', 'Угр',
+                     'Мойв', 'Устрич', 'Дорад', 'Сибас', 'Рыбн', 'Раб'])
+
+    meat_allergy = (['Куриц', 'Курин', 'Мясо', 'Фарш', 'Мясн', 'Говяж', 
+                     'Сосиск', 'Сардельк', 'Колбас', 'Козье', 'Бекон', 'Крол',
+                     'Зай', 'Теляч', 'Телятин', 'Олен', 'Говядина', 'Язык',
+                     'Печень', 'Сало', 'Ветчин', 'Буженин', 'Баранин',
+                     'Свинин', 'Индейк'])
+
+    seed_allergy = (['Мука', 'Макарон', 'Спагетти', 'Кукуруз', 'Хлеб', 'Хлоп',
+                     'Горош', 'Сухар', 'Тесто', 'Булг', 'Манн','Камут', 'Рож',
+                     'Ячмен', 'Полб', 'Лаваш', 'Пшенич', 'Пшениц'])
+
+    honey_allergy = (['Мёд', 'Мед'])
+
+    nuts_allergy = (['Орех', 'Миндал', 'Боб', 'Фасол', 'Горох', 'Нут',
+                     'Арахис', 'Люпин', 'Фундук', 'Кешью', 'Фисташк', 'Кедр',
+                     'Чечеви'])
+
+    for allergy in subscription.allergies.all():
+        if allergy.name == 'Рыба и морепродукты':
+             all_allergies += fish_allergy
+        if allergy.name == 'Мясо':
+            all_allergies += meat_allergy
+        if allergy.name == 'Зерновые':
+            all_allergies += seed_allergy
+        if allergy.name == 'Продукты пчеловодства':
+            all_allergies += honey_allergy
+        if allergy.name == 'Орехи и бобовые':
+            all_allergies += nuts_allergy
+        if allergy.name == 'Молочные продукты':
+            all_allergies += milk_allergy
+
+    if subscription.subs_type.name == 'Классическое':
+        menu_type = 'CL'
+    elif subscription.subs_type.name == 'Низкоуглеводное':
+        menu_type = 'LC'
+    elif subscription.subs_type.name == 'Вегетарианское':
+        menu_type = 'VG'
+    elif subscription.subs_type.name == 'Кето':
+        menu_type = 'KT'
+    else:
+        menu_type = ''
+
+    recipes = Recipe.objects.filter(menu_type=menu_type)
+    
+    for recipe in recipes:
+        is_append = False
+
+        for ingredient in recipe.ingredients.all():
+            is_append = check_for_allergy(ingredient.name, all_allergies)
+
+        if is_append == False:
+            sorted_recipes.append(recipe)
+
+    return sorted_recipes
+
+
+def check_for_allergy(ingredient, allergies):
+    fit = False
+    for product in allergies:
+        if product.lower() in ingredient.lower():
+            fit = True
+    return fit
