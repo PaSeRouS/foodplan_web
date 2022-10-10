@@ -3,9 +3,10 @@ from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import RegisterForm
 from .models import Allergy, SubscriptionType, Subscription, Recipe, SubscriptionRecipe
@@ -45,7 +46,12 @@ def order(request):
 
         subscription.save()
 
-        return render(request, 'lk.html')
+        context = {
+            'username': request.user.username,
+            'id': subscription.id
+        }
+
+        return render(request, 'lk.html', context)
     else:
         context = {
             'allergies': [allergy.name for allergy in Allergy.objects.all()]
@@ -71,8 +77,15 @@ def register(request):
 
 
 def lk(request):
+    try:
+        subscription = Subscription.objects.get(user=request.user)
+        subscription_id = subscription.id
+    except ObjectDoesNotExist:
+        subscription_id = 0
+
     context = {
         'username': request.user.username,
+        'id': subscription_id,
     }
 
     return render(request, 'lk.html', context)
