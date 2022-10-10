@@ -31,6 +31,11 @@ class SubscriptionType(models.Model):
         decimal_places=2,
         validators=[MinValueValidator(0)]
     )
+    description = models.TextField(
+        'Описание подписки',
+        max_length=200,
+        blank=True,
+    )
 
     class Meta:
         verbose_name = 'Тип подписки'
