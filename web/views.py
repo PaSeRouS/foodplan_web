@@ -1,3 +1,4 @@
+import random
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
@@ -7,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
 from .forms import RegisterForm
-from .models import Allergy, SubscriptionType, Subscription, Recipe
+from .models import Allergy, SubscriptionType, Subscription, Recipe, SubscriptionRecipe
 
 
 @login_required(login_url='/login/')
@@ -170,6 +171,21 @@ def subscription_detail(request, subscription_id):
     today = date.today()
 
     recipes = subscription.recipes.select_related('recipe').filter(date=today)
+
+    if not recipes:
+        recipes = random.sample(get_recipes_without_allergies(subscription), subscription.number_of_meals)
+
+        new_recipes = [
+            SubscriptionRecipe(
+                subscription=subscription,
+                recipe=recipe,
+                date=today
+            )
+            for recipe in recipes
+        ]
+
+        SubscriptionRecipe.objects.bulk_create(new_recipes)
+        recipes = new_recipes
 
     context = {
         'subscription': subscription,
