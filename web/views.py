@@ -11,7 +11,7 @@ from .models import Allergy, SubscriptionType, Subscription, Recipe
 
 def order(request):
     if request.method == 'POST':
-        user = User.objects.get(username='admin')
+        user = request.user
 
         subs_type = SubscriptionType.objects.get(
             name__contains=request.POST['menu_type'],
