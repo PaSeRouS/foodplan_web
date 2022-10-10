@@ -33,8 +33,8 @@
           <div class="col-10 col-md-10">
               <div class="row">
                   <div class="col-12 d-flex justify-content-between">
-                      <h2>Название подписки</h2>
-                      <h5>Активна с 20.05.2022 по 20.07.2022</h5>
+                      <h2>{{ subscription.subs_type.name }}</h2>
+                      <h5>Активна до {{ subscription.valid_until|date:'d.m.Y' }}</h5>
                   </div>
                   <div class="col-md-12 col-lg-9">
                       <h6>Описание подписки Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus
@@ -46,16 +46,22 @@
                   </div>
                   <div class="col-md-12 col-lg-3 text-muted d-flex flex-column justify-content-between">
                       <div class="d-flex flex-row justify-content-between">
-                          <small>Персоны: </small><small>3</small>
+                          <small>Персоны: </small><small>{{ subscription.number_of_person }}</small>
                       </div>
                       <div class="d-flex flex-row justify-content-between">
-                          <small>Аллергии: </small><small>нет</small>
+                          <small>Аллергии: </small>
+                          <small>
+                            {% if not subscription.allergies.all %}
+                            Нет
+                            {% else %}
+                              {% for allergy in subscription.allergies.all %}
+                               {{ allergy }} {% if not forloop.last %}<br/>{% endif %}
+                              {% endfor %}
+                            {% endif %}
+                          </small>
                       </div>
                       <div class="d-flex flex-row justify-content-between">
-                          <small>Калории: </small><small>1400</small>
-                      </div>
-                      <div class="d-flex flex-row justify-content-between">
-                          <small>Кол-во приёмов пищи: </small><small>4</small>
+                          <small>Кол-во приёмов пищи: </small><small>{{ subscription.number_of_meals }}</small>
                       </div>
                       
                   </div>
@@ -64,105 +70,48 @@
         </div>
 
         <h2 class="text-center">
-          <strong>Состав меню на 06.10.2022:</strong>
+          <strong>Состав меню на {{ date|date:'d.m.Y' }}:</strong>
         </h2>
 
         <div class="subscription-detail__meals">
-          <div class="subscription-detail__meal">
-            <h3 class="mb-5">
-              <strong>Завтрак</strong>
-            </h3>
+          {% for recipe in recipes %}
+            <div class="subscription-detail__meal">
+              <h3 class="mb-5">
+                <strong>{{forloop.counter}} прием</strong>
+              </h3>
 
-            <ul class="product-list">
-              <li class="product-list__item">
-                <div class="row">
-                  <div class="col-2">
-                    <img src="{% static 'img/circle1.png' %}" alt="" class="w-100">
-                  </div>
-
-                  <div class="col-8">
-                    <h4 class="mb-2">Какое-то блюдо</h4>
-
-                    <p class="mb-2">Ингредиенты: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed.</p>
-                    <h6>Рецепт: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed.</h6>
-                  </div>
-
-                  <div class="col-md-12 col-lg-2 text-muted d-flex flex-column">
-                    <div class="d-flex flex-row justify-content-between">
-                        <small>Калории на порцию: </small><small>1400</small>
+              <ul class="product-list">
+                <li class="product-list__item">
+                  <div class="row">
+                    <div class="col-2">
+                      <img src="{{ recipe.recipe.cover_image.url }}" alt="" class="w-100">
                     </div>
-                    <div class="d-flex flex-row justify-content-between">
-                        <small>Кол-во порций: </small><small>3</small>
+
+                    <div class="col-8">
+                      <h4 class="mb-2">{{ recipe.recipe.name }}</h4>
+
+                      <p class="mb-2">
+                        Ингредиенты:
+                        {% for ingredient in recipe.recipe.ingredient_quantities.all %}
+                          {{ingredient.ingredient.name}} {{ingredient.amount_per_portion}} {{ ingredient.unit_label }}{% if not forloop.last %},{% endif %}
+                        {% endfor %}
+                      </p>
+                      <h6>{{ recipe.recipe.steps }}</h6>
                     </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
 
-          <div class="subscription-detail__meal">
-            <h3 class="mb-5">
-              <strong>Обед</strong>
-            </h3>
-
-            <ul class="product-list">
-              <li class="product-list__item">
-                <div class="row">
-                  <div class="col-2">
-                    <img src="{% static 'img/circle1.png' %}" alt="" class="w-100">
-                  </div>
-
-                  <div class="col-8">
-                    <h4 class="mb-2">Какое-то блюдо</h4>
-
-                    <p class="mb-2">Ингредиенты: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed.</p>
-                    <h6>Рецепт: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed.</h6>
-                  </div>
-
-                  <div class="col-md-12 col-lg-2 text-muted d-flex flex-column">
-                    <div class="d-flex flex-row justify-content-between">
-                        <small>Калории на порцию: </small><small>1400</small>
-                    </div>
-                    <div class="d-flex flex-row justify-content-between">
-                        <small>Кол-во порций: </small><small>3</small>
+                    <div class="col-md-12 col-lg-2 text-muted d-flex flex-column">
+                      <div class="d-flex flex-row justify-content-between">
+                          <small>Калории на порцию: </small><small>{{ recipe.recipe.calories }}</small>
+                      </div>
+                      <div class="d-flex flex-row justify-content-between">
+                          <small>Кол-во порций: </small><small>{{ recipe.subscription.number_of_person }}</small>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <div class="subscription-detail__meal">
-            <h3 class="mb-5">
-              <strong>Ужин</strong>
-            </h3>
-
-            <ul class="product-list">
-              <li class="product-list__item">
-                <div class="row">
-                  <div class="col-2">
-                    <img src="{% static 'img/circle1.png' %}" alt="" class="w-100">
-                  </div>
-
-                  <div class="col-8">
-                    <h4 class="mb-2">Какое-то блюдо</h4>
-
-                    <p class="mb-2">Ингредиенты: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed.</p>
-                    <h6>Рецепт: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed.</h6>
-                  </div>
-
-                  <div class="col-md-12 col-lg-2 text-muted d-flex flex-column">
-                    <div class="d-flex flex-row justify-content-between">
-                        <small>Калории на порцию: </small><small>1400</small>
-                    </div>
-                    <div class="d-flex flex-row justify-content-between">
-                        <small>Кол-во порций: </small><small>3</small>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
+                </li>
+              </ul>
+            </div>
+          {% endfor %}
         </div>
       </div>
     </div>

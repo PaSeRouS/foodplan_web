@@ -1,9 +1,11 @@
-from datetime import datetime
+from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.http import Http404
 
 from .forms import RegisterForm
 from .models import Allergy, SubscriptionType, Subscription, Recipe
@@ -149,3 +151,23 @@ def check_for_allergy(ingredient, allergies):
         if product.lower() in ingredient.lower():
             fit = True
     return fit
+
+
+@login_required
+def subscription_detail(request, subscription_id):
+    subscription = get_object_or_404(Subscription, id=subscription_id)
+
+    if not subscription.user == request.user:
+        raise Http404
+
+    today = date.today()
+
+    recipes = subscription.recipes.select_related('recipe').filter(date=today)
+
+    context = {
+        'subscription': subscription,
+        'recipes': recipes,
+        'date': today
+    }
+
+    return render(request, 'subscription.html', context)

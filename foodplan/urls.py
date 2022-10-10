@@ -27,5 +27,5 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('order/', views.order, name='order_page'),
     path('registration/', views.register, name='registration'),
-    path('subscription/', render, kwargs={'template_name': 'subscription.html'}, name='subscription_page'),
+    path('subscriptions/<int:subscription_id>', views.subscription_detail, name='subscription_page'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

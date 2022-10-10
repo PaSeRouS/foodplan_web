@@ -193,3 +193,18 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class SubscriptionRecipe(models.Model):
+    subscription = models.ForeignKey(
+        Subscription,
+        on_delete=models.CASCADE,
+        verbose_name='Подписка',
+        related_name='recipes'
+    )
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        verbose_name='Рецепт'
+    )
+    date = models.DateField(verbose_name='Дата')

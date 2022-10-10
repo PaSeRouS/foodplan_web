@@ -5,7 +5,8 @@ from .models import (Ingredient,
                      Recipe,
                      Allergy,
                      Subscription,
-                     SubscriptionType)
+                     SubscriptionType,
+                     SubscriptionRecipe)
 
 
 class IngredientQuantityInline(admin.TabularInline):
@@ -18,9 +19,14 @@ class AllergyAdmin(admin.ModelAdmin):
     pass
 
 
+class SubscriptionRecipesInline(admin.TabularInline):
+    model = SubscriptionRecipe
+    extra = 3
+
+
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
-    pass
+    inlines = [SubscriptionRecipesInline]
 
 
 @admin.register(SubscriptionType)
