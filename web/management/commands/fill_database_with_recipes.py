@@ -24,7 +24,7 @@ def get_last_page_of_category(category_url):
 def download_image(image_url):
     response = requests.get(image_url)
     response.raise_for_status()
-    file = NamedTemporaryFile(delete=True)
+    file = NamedTemporaryFile()
     file.write(response.content)
     file.flush()
     return file
