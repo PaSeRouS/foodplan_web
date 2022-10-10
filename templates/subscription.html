@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Foodplan 2021 - Меню на неделю FOODPLAN</title>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-md navbar-light fixed-top navbar__opacity">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{% static 'img/logo.8d8f24edbb5f.svg' %}" height="55" width="189" alt="">
+            </a>
+            <button class="btn btn-outline-success foodplan_green foodplan__border_green">Выйти</button>
+        </div>
+    </nav>
+</header>
+<main style="margin-top: calc(2rem + 85px);">
+  <section>
+    <div class="container">
+      <div class="subscription-detail">
+        <div class="row mb-5">
+          <div class="col-2">
+              <img src="{% static 'img/circle1.png' %}" alt="" class="w-100">
+          </div>
+          <div class="col-10 col-md-10">
+              <div class="row">
+                  <div class="col-12 d-flex justify-content-between">
+                      <h2>Название подписки</h2>
+                      <h5>Активна с 20.05.2022 по 20.07.2022</h5>
+                  </div>
+                  <div class="col-md-12 col-lg-9">
+                      <h6>Описание подписки Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus
+                          consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae
+                          distinctio cum laboriosam sed. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis
+                          necessitatibus consectetur rem! Eligendi
+                          assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam
+                          sed.</h6>
+                  </div>
+                  <div class="col-md-12 col-lg-3 text-muted d-flex flex-column justify-content-between">
+                      <div class="d-flex flex-row justify-content-between">
+                          <small>Персоны: </small><small>3</small>
+                      </div>
+                      <div class="d-flex flex-row justify-content-between">
+                          <small>Аллергии: </small><small>нет</small>
+                      </div>
+                      <div class="d-flex flex-row justify-content-between">
+                          <small>Калории: </small><small>1400</small>
+                      </div>
+                      <div class="d-flex flex-row justify-content-between">
+                          <small>Кол-во приёмов пищи: </small><small>4</small>
+                      </div>
+                      
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <h2 class="text-center">
+          <strong>Состав меню на 06.10.2022:</strong>
+        </h2>
+
+        <div class="subscription-detail__meals">
+          <div class="subscription-detail__meal">
+            <h3 class="mb-5">
+              <strong>Завтрак</strong>
+            </h3>
+
+            <ul class="product-list">
+              <li class="product-list__item">
+                <div class="row">
+                  <div class="col-2">
+                    <img src="{% static 'img/circle1.png' %}" alt="" class="w-100">
+                  </div>
+
+                  <div class="col-8">
+                    <h4 class="mb-2">Какое-то блюдо</h4>
+
+                    <p class="mb-2">Ингредиенты: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed.</p>
+                    <h6>Рецепт: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed.</h6>
+                  </div>
+
+                  <div class="col-md-12 col-lg-2 text-muted d-flex flex-column">
+                    <div class="d-flex flex-row justify-content-between">
+                        <small>Калории на порцию: </small><small>1400</small>
+                    </div>
+                    <div class="d-flex flex-row justify-content-between">
+                        <small>Кол-во порций: </small><small>3</small>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="subscription-detail__meal">
+            <h3 class="mb-5">
+              <strong>Обед</strong>
+            </h3>
+
+            <ul class="product-list">
+              <li class="product-list__item">
+                <div class="row">
+                  <div class="col-2">
+                    <img src="{% static 'img/circle1.png' %}" alt="" class="w-100">
+                  </div>
+
+                  <div class="col-8">
+                    <h4 class="mb-2">Какое-то блюдо</h4>
+
+                    <p class="mb-2">Ингредиенты: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed.</p>
+                    <h6>Рецепт: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed.</h6>
+                  </div>
+
+                  <div class="col-md-12 col-lg-2 text-muted d-flex flex-column">
+                    <div class="d-flex flex-row justify-content-between">
+                        <small>Калории на порцию: </small><small>1400</small>
+                    </div>
+                    <div class="d-flex flex-row justify-content-between">
+                        <small>Кол-во порций: </small><small>3</small>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="subscription-detail__meal">
+            <h3 class="mb-5">
+              <strong>Ужин</strong>
+            </h3>
+
+            <ul class="product-list">
+              <li class="product-list__item">
+                <div class="row">
+                  <div class="col-2">
+                    <img src="{% static 'img/circle1.png' %}" alt="" class="w-100">
+                  </div>
+
+                  <div class="col-8">
+                    <h4 class="mb-2">Какое-то блюдо</h4>
+
+                    <p class="mb-2">Ингредиенты: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed.</p>
+                    <h6>Рецепт: Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius saepe ea nobis necessitatibus consectetur rem! Eligendi assumenda facere sint quibusdam dolorem quasi doloribus nemo, temporibus molestiae distinctio cum laboriosam sed.</h6>
+                  </div>
+
+                  <div class="col-md-12 col-lg-2 text-muted d-flex flex-column">
+                    <div class="d-flex flex-row justify-content-between">
+                        <small>Калории на порцию: </small><small>1400</small>
+                    </div>
+                    <div class="d-flex flex-row justify-content-between">
+                        <small>Кол-во порций: </small><small>3</small>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer>
+  <nav class="navbar navbar-expand-md navbar-light mt-5">
+      <div class="container p-2">
+          <a class="navbar-brand" href="#">
+              <img src="{% static 'img/logo.8d8f24edbb5f.svg' %}" height="55" width="189" alt="">
+          </a>
+          <div class="footer__sideBtns d-flex">
+              <a href="#">
+                  <img src="{% static 'img/vk.png' %}" height="38" width="auto" alt="">
+              </a>
+          </div>
+      </div>
+  </nav>
+</footer>
+<footer class="footer pt-2" style="border-top: 1px solid lightgray;">
+  <div class="container d-flex flex-row justify-content-center mb-2">
+      <small class="text-center">
+          <h6>© Девман2022. Все права защищены. © Devman2022. All right reserved.</h6><a href="#"
+              class="link-secondary">Политика конфиденциальности</a>
+      </small>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+  crossorigin="anonymous"></script>
+</body>

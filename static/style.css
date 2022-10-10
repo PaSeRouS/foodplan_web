@@ -222,3 +222,24 @@ body {
         background-color: #91B93E;
     }
 }
+
+
+.product-list {
+    list-style: none;
+}
+
+.product-list__item {
+    margin-bottom: 56px;
+}
+
+.product-list__item:last-child {
+    margin-bottom: 0;
+}
+
+.subscription-detail__meal {
+    margin-bottom: 70px;
+}
+
+.subscription-detail__meal:last-child {
+    margin-bottom: 0;
+}
