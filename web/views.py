@@ -2,8 +2,10 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
 
+from .forms import RegisterForm
 from .models import Allergy, SubscriptionType, Subscription
 
 
@@ -47,3 +49,19 @@ def order(request):
         }
 
         return render(request, 'order.html', context)
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            new_user = authenticate(
+                username=form.cleaned_data['username'],
+                password=form.cleaned_data['password1'],
+            )
+            login(request, new_user)
+            return redirect('start_page')
+    else:
+        form = RegisterForm()
+    return render(request, 'registration.html', {'form': form})

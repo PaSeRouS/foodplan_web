@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.shortcuts import render
-from django.urls import path
+from django.urls import path, include
 
 from . import settings
 from web import views
@@ -24,5 +24,7 @@ from web import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', render, kwargs={'template_name': 'index.html'}, name='start_page'),
+    path('', include('django.contrib.auth.urls')),
     path('order/', views.order, name='order_page'),
+    path('registration/', views.register, name='registration'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
