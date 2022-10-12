@@ -1,4 +1,5 @@
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,34 +55,37 @@
                             <h5 class="nav-item foodplan__tab-item">Персональные данные</h5>
                             <div class="tab-content mt-2">
                                 <div class="tab-pane fade show active" id="data">
-                                    <form action="">
+                                    <form method="POST"> {% csrf_token %}
                                         <div class="mb-3">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <label for="exampleInputEmail1" class="form-label">Имя</label>
-                                                <small><a href="#" class="link-dark foodplan_green">изменить</a></small>
-                                            </div>
-                                        
-                                            <input type="text" class="form-control" id="name">
+                                            {{ form.first_name.errors }}
+                                            <label for="{{ form.first_name.id_for_label }}" class="form-label">{{ form.first_name.label }}</label>
+                                            {% if request.user.first_name %}
+                                            {% render_field form.first_name class="form-control" placeholder=request.user.first_name %}
+                                            {% else %}
+                                            {% render_field form.first_name class="form-control" placeholder="Имя" %}
+                                            {% endif %}
                                         </div>
                                         <div class="mb-3">
-                                            <label for="exampleInputEmail1" class="form-label">Email</label>
-                                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                                            {{ form.email.errors }}
+                                            <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+                                            {% if request.user.first_name %}
+                                            {% render_field form.email class="form-control" placeholder=request.user.email %}
+                                            {% else %}
+                                            {% render_field form.email class="form-control" placeholder="Email" %}
+                                            {% endif %}
                                         </div>
                                         <div class="mb-3">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <label for="exampleInputPassword1" class="form-label">Пароль</label>
-                                                <small><a href="#" class="link-dark foodplan_green">изменить</a></small>
-                                            </div>
-                                        
-                                            <input type="password" class="form-control" id="password">
+                                            {{ form.new_password1.errors }}
+                                            <label for="{{ form.new_password1.id_for_label }}" class="form-label">Новый пароль:</label>
+                                            {% render_field form.new_password1 class="form-control" placeholder="********" %}
                                         </div>
                                         <div class="mb-3">
-                                            <label for="exampleInputPassword1" class="form-label">Подтверждение пароля</label>
-                                            <input type="password" class="form-control" id="PasswordConfirm">
+                                            {{ form.new_password2.errors }}
+                                            <label for="{{ form.new_password2.id_for_label }}" class="form-label">Повторите пароль:</label>
+                                            {% render_field form.new_password2 class="form-control" placeholder="********" %}
                                         </div>
                                         <div class="d-block">
-                                            <button type="submit" class="btn btn-outline-success foodplan_green foodplan__border_green">Сохранить
-                                                изменения</button>
+                                            <button type="submit" class="btn btn-outline-success foodplan_green foodplan__border_green">Сохранить изменения</button>
                                         </div>
                                     </form>
                                 </div>

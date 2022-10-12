@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 
-from .forms import RegisterForm
+from .forms import RegisterForm, UpdateUserDetailsForm
 from .models import Allergy, SubscriptionType, Subscription, Recipe, SubscriptionRecipe
 
 
@@ -45,13 +45,8 @@ def order(request):
                 )
 
         subscription.save()
+        return redirect('lk')
 
-        context = {
-            'username': request.user.username,
-            'id': subscription.id
-        }
-
-        return render(request, 'lk.html', context)
     else:
         context = {
             'allergies': [allergy.name for allergy in Allergy.objects.all()]
@@ -61,6 +56,8 @@ def order(request):
 
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('lk')
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -76,18 +73,25 @@ def register(request):
     return render(request, 'registration.html', {'form': form})
 
 
+@login_required(login_url='/login/')
 def lk(request):
+    if request.method == 'POST':
+        form = UpdateUserDetailsForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lk')
+    else:
+        form = UpdateUserDetailsForm(request.user)
     try:
-        subscription = Subscription.objects.get(user=request.user)
+        subscription = Subscription.objects.filter(user=request.user)[0]
         subscription_id = subscription.id
     except ObjectDoesNotExist:
         subscription_id = 0
-
     context = {
         'username': request.user.username,
         'id': subscription_id,
+        'form': form
     }
-
     return render(request, 'lk.html', context)
 
 
